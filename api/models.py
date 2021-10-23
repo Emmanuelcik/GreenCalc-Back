@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import PermissionsMixin
+
 
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
@@ -6,8 +9,7 @@ class User(models.Model):
     email = models.EmailField(max_length = 100, null=False)
     password = models.CharField(max_length = 200, null=False)
 
-    created = models.DateTimeField(auto_now_add=True)
-    edited = models.DateTimeField(auto_now=True)
+
 
 class Enterprise(models.Model):
     enterprise_id = models.AutoField(primary_key=True)
