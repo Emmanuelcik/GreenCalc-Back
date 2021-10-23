@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     ##
     'rest_framework',
-    'rest_framewrok.authtoken',
+    'rest_framework.authtoken',
     ##
     'api',
 ]
@@ -82,7 +82,7 @@ pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'greencalc',
+        'NAME': 'greencalc2',
         'USER': 'root',
         'PASSWORD': 'n0m3l0',
         'HOST': '127.0.0.1',

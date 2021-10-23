@@ -1,11 +1,12 @@
+from enum import unique
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
-    username = serializers.CharField()
-    password = serializers.CharField()
-    email = serializers.CharField()
+    username = serializers.CharField(required=True)
+    password = serializers.CharField(required=True)
+    email = serializers.CharField(required=True)
 
     def create(self, validated_data):
         user = User()
@@ -17,8 +18,8 @@ class UserSerializer(serializers.Serializer):
 
     def validateUsername(self, data):
         user = User.objects.filter(username = data)
-        if len(user) != 0:
+        userEmail = User.objects.filter(email = data)
+        if (len(user) != 0 or len(userEmail) != 0):
             raise serializers.ValidationError("Este usuario ya existe, Ingrese uno nuevo")
         else:
             return data
-    
