@@ -1,25 +1,33 @@
-# from django.views import View
-# from .models import User
-# from .models import Enterprise
-# from django.http import JsonResponse
-# from django.forms.models import model_to_dict
+from .serializer import UserSerializer
+from django.contrib.auth.models import User
+from django.db.models.deletion import RESTRICT
+from rest_framework.decorators import api_view
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.hashers import check_password
+from rest_framework.response import Response
 
-# class apiListUsersView(View):
-#     def get(self, request):
-#         uList = User.objects.all()
-#         return JsonResponse(list(uList.values()), safe=False)
+@api_view(["POST"])
 
-# class apiDetailUserView(View):
-#     def get(self, request, pk):
-#         user = User.objects.get(pk=pk)
-#         return JsonResponse(model_to_dict(user))
+def login(request):
 
-# class apiListEnterprisesView(View):
-#     def get(self, request):
-#         eList = Enterprise.objects.all()
-#         return JsonResponse(list(eList.values()), safe=False)
+    print(request)
+    # usuario = UserSerializer
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    # email = request.POST.get("email")
 
-# class apiDetailEnterpriseView(View):
-#     def get(self, request, pk):
-#         enterprise = Enterprise.objects.get(pk=pk)
-#         return JsonResponse(model_to_dict(enterprise))
+    user = User.objects.get(username=username)
+    # try:
+    # except User.DoesNotExist:
+    #     return Response("Usuario no valido")
+    
+    pwd_valid = check_password(password, user.password)
+
+    if not pwd_valid:
+        return Response("Contraeña invalida")
+    
+
+    token, _ = Token.objects.get_or_create(user=user)
+
+    print(token.key)
+    return Response(token.key)

@@ -1,4 +1,5 @@
 from enum import unique
+from django.db import models
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
@@ -23,3 +24,4 @@ class UserSerializer(serializers.Serializer):
             raise serializers.ValidationError("Este usuario ya existe, Ingrese uno nuevo")
         else:
             return data
+

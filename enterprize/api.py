@@ -1,16 +1,14 @@
 from rest_framework.response import Response
-from .serializer import UserSerializer
-
+from .serializer import EnterprizeSerlizer
 from rest_framework import status
 from rest_framework.views import APIView
 
-class UserAPI(APIView):
+
+class EnterprizeAPI(APIView):
     def post(self, request):
-        serializer = UserSerializer(data = request.data)
+        serializer = EnterprizeSerlizer(data = request.data)
         if(serializer.is_valid()):
-            user = serializer.save()
+            enterprize = serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         else:
-            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-
-
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
